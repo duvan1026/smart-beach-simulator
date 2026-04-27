@@ -1,0 +1,159 @@
+{
+  "unidad_generadora": "Servicio del Banco Nacional de Datos Climatológicos",
+  "periodicidad": "1 vez al día, con un retardo de 4 días",
+  "descripcion": "Climatologías diarias",
+  "formato": "application/json",
+  "copyright": "© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.",
+  "notaLegal": "https://www.aemet.es/es/nota_legal",
+  "campos": [
+  	{"id":"fecha",
+	"descripcion": "fecha del dia (AAAA-MM-DD)",
+	"tipo_datos": "string",
+    	"requerido": true
+    },
+	{"id":"indicativo",
+	"descripcion": "indicativo climatológico",
+	"tipo_datos": "string",
+    	"requerido": true
+    },
+	{"id": "nombre",
+	"descripcion": "nombre (ubicación) de la estación",
+	"tipo_datos": "string",
+    	"requerido": true 
+    },
+	{"id": "provincia",
+	"descripcion": "provincia de la estación",
+	"tipo_datos": "string",
+    	"requerido": true
+    },
+	{"id": "altitud",
+	"descripcion": "altitud de la estación en m sobre el nivel del mar",
+	"tipo_datos": "float",
+	"unidad": "m",
+    	"requerido": true
+    },
+	{"id":"tmed",
+	"descripcion": "Temperatura media diaria",
+	"tipo_datos": "float",
+	"unidad": "°C",
+    	"requerido": false
+    },
+	{"id":"prec",
+        "descripcion": "Precipitación diaria de 07 a 07",
+        "tipo_datos": "float",
+        "unidad": "mm (Ip = inferior a 0,1 mm) (Acum = Precipitación acumulada)",
+        "requerido": false
+    },
+        {"id":"tmin",
+        "descripcion": "Temperatura Mínima del día",
+        "tipo_datos": "float",
+        "unidad": "°C",
+        "requerido": false
+    },
+        {"id":"horatmin",
+        "descripcion": "Hora y minuto de la temperatura mínima",
+        "tipo_datos": "string",
+	"unidad": "UTC",
+        "requerido": false
+    },
+        {"id":"tmax",
+        "descripcion": "Temperatura Máxima del día",
+        "tipo_datos": "float",
+        "unidad": "°C",
+        "requerido": false
+    },
+        {"id":"horatmax",
+        "descripcion": "Hora y minuto de la temperatura máxima",
+        "tipo_datos": "string",
+	"unidad": "UTC",
+        "requerido": false
+    },
+        {"id":"dir",
+        "descripcion": "Dirección de la racha máxima",
+        "tipo_datos": "float",
+        "unidad": "decenas de grado (99 = dirección variable)(88 = sin dato)",
+        "requerido": false
+    },
+        {"id":"velmedia",
+        "descripcion": "Velocidad media del viento",
+        "tipo_datos": "float",
+        "unidad": "m/s",
+        "requerido": false
+    },
+        {"id":"racha",
+        "descripcion": "Racha máxima del viento",
+        "tipo_datos": "float",
+        "unidad": "m/s",
+        "requerido": false
+    },
+        {"id":"horaracha",
+        "descripcion": "Hora y minuto de la racha máxima",
+        "tipo_datos": "string",
+	"unidad": "UTC",
+        "requerido": false
+    },
+        {"id":"sol",
+        "descripcion": "Insolación",
+        "tipo_datos": "float",
+	"unidad": "horas",
+        "requerido": false
+    },
+        {"id":"presmax",
+        "descripcion": "Presión máxima al nivel de referencia de la estación",
+        "tipo_datos": "float",
+	"unidad": "hPa",
+        "requerido": false
+    },
+        {"id":"horapresmax",
+        "descripcion": "Hora de la presión máxima (redondeada a la hora entera más próxima)",
+        "tipo_datos": "string",
+	"unidad": "UTC",
+        "requerido": false
+    },
+        {"id":"presmin",
+        "descripcion": "Presión mínima al nivel de referencia de la estación",
+        "tipo_datos": "float",
+	"unidad": "hPa",
+        "requerido": false
+    },
+        {"id":"horapresmin",
+        "descripcion": "Hora de la presión mínima (redondeada a la hora entera más próxima)",
+        "tipo_datos": "string",
+	"unidad": "UTC",
+        "requerido": false
+    },
+        {"id":"hrmedia",
+        "descripcion": "Humedad relativa media diaria",
+        "tipo_datos": "float",
+	"unidad": "%",
+        "requerido": false
+    },
+        {"id":"hrmax",
+        "descripcion": "Humedad relativa máxima diaria",
+        "tipo_datos": "float",
+	"unidad": "%",
+        "requerido": false
+    },
+        {"id":"horahrmax",
+        "descripcion": "Hora de la humedad relativa máxima diaria",
+        "tipo_datos": "string",
+	"unidad": "UTC",
+        "requerido": false
+    },
+        {"id":"hrmin",
+        "descripcion": "Humedad relativa mínima diaria",
+        "tipo_datos": "float",
+	"unidad": "%",
+        "requerido": false
+    },
+        {"id":"horahrmin",
+        "descripcion": "Hora de la humedad relativa mínima diaria",
+        "tipo_datos": "string",
+	"unidad": "UTC",
+        "requerido": false
+    }
+  ]
+}
+
+URL: https://opendata.aemet.es/
+Simulación Estocástica Basada en Perfiles.

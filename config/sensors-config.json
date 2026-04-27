@@ -1,0 +1,104 @@
+{
+  "publishIntervalMs": 3000,
+  "beaches": [
+    {
+      "id": "victoria",
+      "name": "Playa de la Victoria",
+      "lat": 36.52,
+      "lon": -6.29
+    },
+    {
+      "id": "caleta",
+      "name": "Playa de la Caleta",
+      "lat": 36.53,
+      "lon": -6.30
+    },
+    {
+      "id": "cortadura",
+      "name": "Playa de Cortadura",
+      "lat": 36.49,
+      "lon": -6.25
+    }
+  ],
+  "sensors": {
+    "wind": {
+      "unit": "km/h",
+      "normalMin": 5.0,
+      "normalMax": 43.0,
+      "variationMin": 1.0,
+      "variationMax": 3.0
+    },
+    "pressure": {
+      "unit": "hPa",
+      "normalMin": 1011.0,
+      "normalMax": 1024.0,
+      "variationMin": 0.1,
+      "variationMax": 0.5
+    },
+    "temperature": {
+      "unit": "C",
+      "normalMin": 16.0,
+      "normalMax": 30.0,
+      "variationMin": 0.1,
+      "variationMax": 0.3
+    },
+    "sealevel": {
+      "unit": "m",
+      "normalMin": 0.3,
+      "normalMax": 1.2,
+      "variationMin": 0.01,
+      "variationMax": 0.05
+    },
+    "occupancy": {
+      "unit": "%",
+      "normalMin": 0,
+      "normalMax": 100,
+      "variationMin": 1,
+      "variationMax": 5
+    }
+  },
+  "scenarios": {
+    "NORMAL": {
+      "wind":        { "min": 5.0,   "max": 43.0,  "variationMin": 1.0,  "variationMax": 3.0 },
+      "pressure":    { "min": 1011.0,"max": 1024.0, "variationMin": 0.1,  "variationMax": 0.5 },
+      "temperature": { "min": 16.0,  "max": 30.0,   "variationMin": 0.1,  "variationMax": 0.3 },
+      "sealevel":    { "min": 0.3,   "max": 1.2,    "variationMin": 0.01, "variationMax": 0.05 },
+      "occupancy":   { "min": 0,     "max": 100,    "variationMin": 1,    "variationMax": 5 }
+    },
+    "LEVANTE": {
+      "wind":        { "min": 50.0,  "max": 68.0,   "variationMin": 3.0,  "variationMax": 8.0 },
+      "pressure":    { "min": 1010.0,"max": 1017.0,  "variationMin": 0.2,  "variationMax": 0.8 },
+      "temperature": { "min": 22.0,  "max": 33.0,    "variationMin": 0.2,  "variationMax": 0.5 },
+      "sealevel":    { "min": 0.5,   "max": 1.5,     "variationMin": 0.02, "variationMax": 0.08 },
+      "occupancy":   { "min": 0,     "max": 30,      "variationMin": 2,    "variationMax": 8 }
+    },
+    "STORM": {
+      "wind":        { "min": 60.0,  "max": 88.0,   "variationMin": 4.0,  "variationMax": 10.0 },
+      "pressure":    { "min": 997.0, "max": 1010.0,  "variationMin": 1.0,  "variationMax": 3.0 },
+      "temperature": { "min": 12.0,  "max": 20.0,    "variationMin": 0.3,  "variationMax": 0.8 },
+      "sealevel":    { "min": 1.5,   "max": 2.5,     "variationMin": 0.05, "variationMax": 0.15 },
+      "occupancy":   { "min": 0,     "max": 10,      "variationMin": 1,    "variationMax": 3 }
+    },
+    "SEVERE_STORM": {
+      "wind":        { "min": 91.0,  "max": 130.0,  "variationMin": 5.0,  "variationMax": 15.0 },
+      "pressure":    { "min": 994.0, "max": 997.0,   "variationMin": 1.0,  "variationMax": 3.0 },
+      "temperature": { "min": 9.0,   "max": 16.0,    "variationMin": 0.5,  "variationMax": 1.0 },
+      "sealevel":    { "min": 2.5,   "max": 4.0,     "variationMin": 0.1,  "variationMax": 0.3 },
+      "occupancy":   { "min": 0,     "max": 5,       "variationMin": 0,    "variationMax": 2 }
+    },
+    "HEATWAVE": {
+      "wind":        { "min": 3.0,   "max": 20.0,   "variationMin": 0.5,  "variationMax": 2.0 },
+      "pressure":    { "min": 1013.0,"max": 1022.0,  "variationMin": 0.1,  "variationMax": 0.3 },
+      "temperature": { "min": 36.0,  "max": 42.0,    "variationMin": 0.2,  "variationMax": 0.5 },
+      "sealevel":    { "min": 0.3,   "max": 1.0,     "variationMin": 0.01, "variationMax": 0.03 },
+      "occupancy":   { "min": 60,    "max": 95,      "variationMin": 2,    "variationMax": 5 }
+    },
+    "HIGH_OCCUPANCY": {
+      "wind":        { "min": 20.0,  "max": 43.0,   "variationMin": 2.0,  "variationMax": 5.0 },
+      "pressure":    { "min": 1011.0,"max": 1020.0,  "variationMin": 0.2,  "variationMax": 0.5 },
+      "temperature": { "min": 22.0,  "max": 30.0,    "variationMin": 0.2,  "variationMax": 0.4 },
+      "sealevel":    { "min": 0.5,   "max": 1.5,     "variationMin": 0.02, "variationMax": 0.05 },
+      "occupancy":   { "min": 85,    "max": 100,     "variationMin": 1,    "variationMax": 3 }
+    }
+  }
+}

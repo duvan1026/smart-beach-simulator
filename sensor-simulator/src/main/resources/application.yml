@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: sensor-simulator
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/BeachMonitorDB}
+    username: ${SPRING_DATASOURCE_USERNAME:beach}
+    password: ${SPRING_DATASOURCE_PASSWORD:monitor}
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        default_schema: beach_monitor
+
+server:
+  port: ${SERVER_PORT:8290}
+
+mqtt:
+  brokerUrl: ${MQTT_BROKER_URL:tcp://localhost:1883}
+  clientId: ${MQTT_CLIENT_ID:beach-sensor-simulator}
+  username: ""
+  password: ""
+  defaultTopic: beach/sensor
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
