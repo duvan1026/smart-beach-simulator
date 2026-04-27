@@ -10,6 +10,7 @@ Hojas generadas:
 """
 
 import io
+import os
 import statistics
 from collections import defaultdict
 
@@ -21,7 +22,10 @@ import numpy as np
 import openpyxl
 from openpyxl.drawing.image import Image as XLImage
 
-EXCEL_PATH = "/Users/sadebrugalflores/Documents/Duvan_Ivan_MPC/Historico_Temp_Cadiz.xlsx"
+# Obtiene la ruta absoluta de la carpeta donde está este script (la carpeta 'docs')
+DIRECTORIO_BASE = os.path.dirname(os.path.abspath(__file__))
+
+EXCEL_PATH = os.path.join(DIRECTORIO_BASE, "Historico_Temp_Cadiz.xlsx")
 MESES_ES = ["", "Ene", "Feb", "Mar", "Abr", "May", "Jun",
             "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
 
@@ -460,14 +464,35 @@ def sheet_escenarios(wb, data):
     conteo = {e: escenarios.count(e) for e in ORDEN}
     total  = len(escenarios)
 
+    # # ── Grafico 1: Pie de frecuencia global ──
+    # fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    # sizes  = [conteo[e] for e in ORDEN if conteo[e] > 0]
+    # labels = [f"{ETIQUETAS[e]}\n{conteo[e]} dias ({conteo[e]/total*100:.1f}%)" for e in ORDEN if conteo[e] > 0]
+    # colors = [COLORES[e] for e in ORDEN if conteo[e] > 0]
+    # axes[0].pie(sizes, labels=labels, colors=colors, autopct="", startangle=90,
+    #             wedgeprops={"edgecolor": "white", "linewidth": 1.5})
+    # axes[0].set_title(f"Frecuencia global de escenarios\n(total: {total} dias)", fontweight="bold")
+
     # ── Grafico 1: Pie de frecuencia global ──
     fig, axes = plt.subplots(1, 2, figsize=(14, 5))
     sizes  = [conteo[e] for e in ORDEN if conteo[e] > 0]
-    labels = [f"{ETIQUETAS[e]}\n{conteo[e]} dias ({conteo[e]/total*100:.1f}%)" for e in ORDEN if conteo[e] > 0]
+    
+    # Cambiamos el salto de linea (\n) por dos puntos (:) para que quede en una sola linea
+    labels = [f"{ETIQUETAS[e]}: {conteo[e]} dias ({conteo[e]/total*100:.1f}%)" for e in ORDEN if conteo[e] > 0]
     colors = [COLORES[e] for e in ORDEN if conteo[e] > 0]
-    axes[0].pie(sizes, labels=labels, colors=colors, autopct="", startangle=90,
-                wedgeprops={"edgecolor": "white", "linewidth": 1.5})
+    
+    # Guardamos los elementos (wedges) y QUITAMOS 'labels=labels' para no amontonar texto
+    wedges, texts = axes[0].pie(sizes, colors=colors, startangle=90,
+                                wedgeprops={"edgecolor": "white", "linewidth": 1.5})
+    
     axes[0].set_title(f"Frecuencia global de escenarios\n(total: {total} dias)", fontweight="bold")
+    
+    # Agregamos la leyenda debajo del grafico circular
+    axes[0].legend(wedges, labels, loc="upper center", bbox_to_anchor=(0.5, -0.05), 
+                   fontsize=9, ncol=1, frameon=False)
+
+    # Barras de frecuencia anual (Este código se mantiene igual, lo pongo para que te guíes)
+    anios = sorted(set(d["anio"] for d in data))
 
     # Barras de frecuencia anual
     anios = sorted(set(d["anio"] for d in data))
