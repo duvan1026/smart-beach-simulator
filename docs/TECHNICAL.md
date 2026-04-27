@@ -497,36 +497,6 @@ beach/#
 Para anadir un nuevo patron CEP: `INSERT` en `esper_patterns` y reiniciar el CEP Engine.  
 Para anadir una nueva playa: agregar entrada en `sensors-config.json` y reiniciar el simulador.
 
----
-
-## Codigo Reutilizado del Proyecto IoT
-
-| Archivo Origen (Proyecto_IoT) | Destino (beach-monitor) | Modificaciones |
-|---|---|---|
-| `SensorsSimulation/utils/SensorBehaviorUtils.java` | `sensor-simulator/utils/` | Cambio de package |
-| `SensorsSimulation/utils/NumberUtils.java` | `sensor-simulator/utils/` | Cambio de package |
-| `SensorsSimulation/utils/RandomUtils.java` | `sensor-simulator/utils/` | Cambio de package |
-| `SensorsSimulation/utils/TimeUtils.java` | `sensor-simulator/utils/` | Cambio de package |
-| `SensorsSimulation/config/MqttConfig.java` | `sensor-simulator/config/` y `cep-engine/config/` | Cambio de package, env vars |
-| `SensorsSimulation/service/MqttPublisherService.java` | `sensor-simulator/service/` | Cambio de package |
-| `SensorsSimulation/service/SensorSimulatorJob.java` | `sensor-simulator/service/` | Refactorizado: config-driven |
-
----
-
-## Cumplimiento de la Rubrica (45 puntos)
-
-| Criterio | Puntos | Como se cumple |
-|---|---|---|
-| Eventos JSON en simulador -> RabbitMQ -> Java CEP | 5 | Simulator genera JSON, Node-RED puentea a RabbitMQ, CEP Engine con Esper consume |
-| Variedad de tipos de eventos y datos | 5 | 5 tipos de sensor (String, double, int), 2 event types Esper, 6 escenarios |
-| Varios patrones con variedad de operadores | 8 | 8 patrones EPL con ventanas temporales, followed-by, timer:within, aggregation, group by, having, AND/OR, aritmetica, every, correlacion cross-event |
-| Integracion con tecnologias IoT (MQTT) | 8 | Mosquitto como backbone IoT. Bidireccional: sensores -> MQTT -> sistema -> MQTT -> dashboard |
-| Eventos y patrones NO hard-coded | 5 | Sensores en `sensors-config.json`, event types en `event-types.json`, patrones EPL en PostgreSQL |
-| Almacenamiento en base de datos | 4 | `sensor_readings` (eventos simples) + `complex_events` (eventos complejos) en PostgreSQL |
-| Dashboard de monitorizacion | 5 | Node-RED Dashboard con graficos tiempo real, alertas coloreadas, tabla de eventos, 6 botones control |
-| Extensibilidad, escalabilidad, interoperabilidad, ODS | 5 | Ver seccion siguiente |
-
----
 
 ## Extensibilidad, Escalabilidad, Interoperabilidad y ODS
 
