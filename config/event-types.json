@@ -1,0 +1,26 @@
+{
+  "eventTypes": [
+    {
+      "name": "SensorEvent",
+      "properties": {
+        "beachId": "string",
+        "sensorType": "string",
+        "value": "double",
+        "unit": "string",
+        "timestamp": "string"
+      }
+    },
+    {
+      "name": "BeachCombinedEvent",
+      "properties": {
+        "beachId": "string",
+        "timestamp": "string",
+        "windSpeed": "double",
+        "pressure": "double",
+        "temperature": "double",
+        "seaLevel": "double",
+        "occupancy": "int"
+      }
+    }
+  ]
+}

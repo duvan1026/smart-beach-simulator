@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Beach Monitor — Diagrama de Base de Datos</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 32px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    header h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #38bdf8;
+      letter-spacing: 0.5px;
+    }
+
+    header p {
+      color: #94a3b8;
+      margin-top: 6px;
+      font-size: 0.95rem;
+    }
+
+    .diagram-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 1300px;
+      margin: 0 auto 40px auto;
+    }
+
+    .diagram-card h2 {
+      font-size: 1.1rem;
+      color: #7dd3fc;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #334155;
+    }
+
+    .mermaid {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* legend */
+    .legend {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .legend-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .legend-card h3 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .legend-card ul {
+      list-style: none;
+    }
+
+    .legend-card ul li {
+      font-size: 0.88rem;
+      color: #94a3b8;
+      padding: 3px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .config  { color: #34d399; } .dot-config  { background: #34d399; }
+    .events  { color: #fb923c; } .dot-events  { background: #fb923c; }
+    .cep     { color: #c084fc; } .dot-cep     { background: #c084fc; }
+    .view    { color: #38bdf8; } .dot-view    { background: #38bdf8; }
+
+    .note {
+      max-width: 1300px;
+      margin: 20px auto 0;
+      background: #1e293b;
+      border-left: 4px solid #f59e0b;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 0.88rem;
+      color: #94a3b8;
+    }
+
+    .note strong { color: #fbbf24; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Beach Monitor — Diagrama de Base de Datos</h1>
+  <p>Schema: <code>beach_monitor</code> &nbsp;|&nbsp; PostgreSQL</p>
+</header>
+
+<div class="diagram-card">
+  <h2>Entidad-Relacion (ERD)</h2>
+  <div class="mermaid">
+erDiagram
+
+    %% ── CONFIGURACION ──────────────────────────────────────────
+    beaches {
+        BIGSERIAL   id          PK
+        VARCHAR50   beach_id    UK
+        VARCHAR100  name
+        DOUBLE      lat
+        DOUBLE      lon
+        BOOLEAN     enabled
+    }
+
+    sensor_types {
+        BIGSERIAL   id           PK
+        VARCHAR20   sensor_type  UK
+        VARCHAR10   unit
+        DOUBLE      normal_min
+        DOUBLE      normal_max
+        DOUBLE      variation_min
+        DOUBLE      variation_max
+    }
+
+    scenarios {
+        BIGSERIAL   id            PK
+        VARCHAR30   scenario_name
+        VARCHAR20   sensor_type   FK
+        DOUBLE      min_value
+        DOUBLE      max_value
+        DOUBLE      variation_min
+        DOUBLE      variation_max
+    }
+
+    %% ── EVENTOS EN TIEMPO REAL ──────────────────────────────────
+    sensor_readings {
+        BIGSERIAL   id           PK
+        VARCHAR50   beach_id     FK
+        VARCHAR20   sensor_type  FK
+        DOUBLE      value
+        VARCHAR10   unit
+        TIMESTAMP   reading_time
+        TIMESTAMP   created_at
+    }
+
+    %% ── CEP / ALERTAS ────────────────────────────────────────────
+    esper_patterns {
+        BIGSERIAL   id            PK
+        VARCHAR50   pattern_id    UK
+        VARCHAR100  name
+        TEXT        description
+        TEXT        epl_statement
+        VARCHAR10   alert_level
+        BOOLEAN     enabled
+        TIMESTAMP   created_at
+        TIMESTAMP   updated_at
+    }
+
+    complex_events {
+        BIGSERIAL   id            PK
+        VARCHAR50   pattern_id    FK
+        VARCHAR100  pattern_name
+        VARCHAR10   alert_level
+        VARCHAR50   beach_id      FK
+        JSONB       details
+        TEXT        message
+        TIMESTAMP   detected_at
+    }
+
+    %% ── RELACIONES ───────────────────────────────────────────────
+    beaches         ||--o{  sensor_readings  : "beach_id"
+    sensor_types    ||--o{  sensor_readings  : "sensor_type"
+    sensor_types    ||--o{  scenarios        : "sensor_type"
+    esper_patterns  ||--o{  complex_events   : "pattern_id"
+    beaches         ||--o{  complex_events   : "beach_id"
+  </div>
+</div>
+
+<div class="legend">
+
+  <div class="legend-card">
+    <h3 class="config">Configuracion del simulador</h3>
+    <ul>
+      <li><span class="dot dot-config"></span><strong>beaches</strong> — 3 playas activas</li>
+      <li><span class="dot dot-config"></span><strong>sensor_types</strong> — 5 tipos de sensor con rangos normales</li>
+      <li><span class="dot dot-config"></span><strong>scenarios</strong> — 6 escenarios x 5 sensores = 30 filas</li>
+    </ul>
+  </div>
+
+  <div class="legend-card">
+    <h3 class="events">Eventos en tiempo real</h3>
+    <ul>
+      <li><span class="dot dot-events"></span><strong>sensor_readings</strong> — lectura cruda de cada sensor cada 3 s</li>
+      <li><span class="dot dot-events"></span>Referencia <code>beach_id</code> y <code>sensor_type</code> por valor (sin FK declarada)</li>
+    </ul>
+  </div>
+
+  <div class="legend-card">
+    <h3 class="cep">CEP / Motor de alertas</h3>
+    <ul>
+      <li><span class="dot dot-cep"></span><strong>esper_patterns</strong> — 8 patrones EPL almacenados en BD</li>
+      <li><span class="dot dot-cep"></span><strong>complex_events</strong> — alertas detectadas por Esper</li>
+      <li><span class="dot dot-cep"></span>Niveles: YELLOW, ORANGE, RED</li>
+    </ul>
+  </div>
+
+  <div class="legend-card">
+    <h3 class="view">Vista</h3>
+    <ul>
+      <li><span class="dot dot-view"></span><strong>latest_alerts</strong> — ultima alerta por playa</li>
+      <li><span class="dot dot-view"></span><code>DISTINCT ON (beach_id)</code> ordenado por <code>detected_at DESC</code></li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="note">
+  <strong>Nota:</strong> Las relaciones entre <code>sensor_readings</code> y las tablas <code>beaches</code> / <code>sensor_types</code>
+  son <em>logicas</em> (por valor de VARCHAR), no estan declaradas como <code>FOREIGN KEY</code> en el DDL actual.
+  Lo mismo aplica a <code>complex_events.beach_id</code>. Considera agregar FK reales para garantizar integridad referencial.
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    er: {
+      diagramPadding: 30,
+      layoutDirection: 'TB',
+      minEntityWidth: 100,
+      minEntityHeight: 75,
+      entityPadding: 15,
+      useMaxWidth: true
+    }
+  });
+</script>
+
+</body>
+</html>

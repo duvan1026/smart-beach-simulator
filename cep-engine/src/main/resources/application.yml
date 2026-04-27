@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: cep-engine
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/BeachMonitorDB}
+    username: ${SPRING_DATASOURCE_USERNAME:beach}
+    password: ${SPRING_DATASOURCE_PASSWORD:monitor}
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        default_schema: beach_monitor
+
+  rabbitmq:
+    host: ${SPRING_RABBITMQ_HOST:localhost}
+    port: ${SPRING_RABBITMQ_PORT:5672}
+    username: ${SPRING_RABBITMQ_USERNAME:beach}
+    password: ${SPRING_RABBITMQ_PASSWORD:monitor}
+
+server:
+  port: ${SERVER_PORT:8291}
+
+mqtt:
+  brokerUrl: ${MQTT_BROKER_URL:tcp://localhost:1883}
+  clientId: ${MQTT_CLIENT_ID:beach-cep-engine}
+  username: ""
+  password: ""
+
+esper:
+  eventTypesPath: ${ESPER_EVENT_TYPES_PATH:/app/config/event-types.json}
